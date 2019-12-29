@@ -26,7 +26,7 @@
  * Specialised restore task for the genericotemp block
  * (requires encode_content_links in some configdata attrs)
  */
-class restore_html_block_task extends restore_block_task {
+class restore_genericotemp_block_task extends restore_block_task {
 
     /**
      *
@@ -61,7 +61,7 @@ class restore_html_block_task extends restore_block_task {
 
         $contents = [];
 
-        $contents[] = new restore_html_block_decode_content('block_instances', 'configdata', 'block_instance');
+        $contents[] = new restore_genericotemp_block_decode_content('block_instances', 'configdata', 'block_instance');
 
         return $contents;
     }
@@ -79,7 +79,7 @@ class restore_html_block_task extends restore_block_task {
  * field, to serve the configdata->text content to the restore_decode_processor
  * packaging it back to its serialized form after process
  */
-class restore_html_block_decode_content extends restore_decode_content {
+class restore_genericotemp_block_decode_content extends restore_decode_content {
 
     protected $configdata; // Temp storage for unserialized configdata
 

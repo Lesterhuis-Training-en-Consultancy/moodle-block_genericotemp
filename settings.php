@@ -27,8 +27,15 @@
 defined('MOODLE_INTERNAL') || die;
 
 if ($ADMIN->fulltree) {
-    $settings->add(new admin_setting_configcheckbox('block_genericotemp_allowcssclasses', get_string('allowadditionalcssclasses', 'block_genericotemp'),
-        get_string('configallowadditionalcssclasses', 'block_genericotemp'), 0));
+    $settings->add(new admin_setting_configcheckbox('block_genericotemp_allowcssclasses',
+        get_string('allowadditionalcssclasses', 'block_genericotemp'),
+        get_string('configallowadditionalcssclasses', 'block_genericotemp'),
+        0));
+
+    $settings->add(new admin_setting_confightmleditor('block_genericotemp/text',
+        get_string('setting:text' , 'block_genericotemp'),
+        '',
+        ''));
 }
 
 

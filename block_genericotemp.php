@@ -32,39 +32,42 @@ class block_genericotemp extends block_base {
     /**
      * @throws coding_exception
      */
-    function init() {
+    public function init() {
         $this->title = get_string('pluginname', 'block_genericotemp');
     }
 
     /**
      * @return bool
      */
-    function has_config() {
+    public function has_config() {
         return true;
     }
 
     /**
      * @return array
      */
-    function applicable_formats() {
-        return ['all' => true];
+    public function applicable_formats() {
+        return [
+            'course-view' => true,
+            'my' => true,
+        ];
     }
 
     /**
      * @throws coding_exception
      */
-    function specialization() {
+    public function specialization() {
         if (isset($this->config->title)) {
             $this->title = $this->title = format_string($this->config->title, true, ['context' => $this->context]);
         } else {
-            $this->title = get_string('newhtmlblock', 'block_genericotemp');
+            $this->title = '';
         }
     }
 
     /**
      * @return bool
      */
-    function instance_allow_multiple() {
+    public function instance_allow_multiple() {
         return true;
     }
 
@@ -72,13 +75,18 @@ class block_genericotemp extends block_base {
      * @return stdClass|stdObject
      * @throws coding_exception
      */
-    function get_content() {
+    public function get_content() {
         global $CFG;
 
         require_once($CFG->libdir . '/filelib.php');
 
         if ($this->content !== null) {
             return $this->content;
+        }
+
+        if(!has_capability('block/genericotemp:view', $this->context)){
+            return (object)[
+            ];
         }
 
         $filteropt = new stdClass;
@@ -155,7 +163,7 @@ class block_genericotemp extends block_base {
     /**
      * Serialize and store config data
      */
-    function instance_config_save($data, $nolongerused = false) {
+    public function instance_config_save($data, $nolongerused = false) {
         $config = clone($data);
         // Move embedded files into a proper filearea and adjust HTML links to match
         $config->text = file_save_draft_area_files($data->text['itemid'], $this->context->id, 'block_genericotemp', 'content', 0, ['subdirs' => true], $data->text['text']);
@@ -164,8 +172,10 @@ class block_genericotemp extends block_base {
         parent::instance_config_save($config, $nolongerused);
     }
 
-    function instance_delete() {
-        global $DB;
+    /**
+     * @return bool
+     */
+    public function instance_delete() {
         $fs = get_file_storage();
         $fs->delete_area_files($this->context->id, 'block_genericotemp');
 
@@ -196,7 +206,7 @@ class block_genericotemp extends block_base {
      * @return bool
      * @throws coding_exception
      */
-    function content_is_trusted() {
+    public function content_is_trusted() {
         global $SCRIPT;
 
         if (!$context = context::instance_by_id($this->instance->parentcontextid, IGNORE_MISSING)) {
@@ -232,7 +242,7 @@ class block_genericotemp extends block_base {
      *
      * @return array
      */
-    function html_attributes() {
+    public function html_attributes() {
         global $CFG;
 
         $attributes = parent::html_attributes();
@@ -245,4 +255,31 @@ class block_genericotemp extends block_base {
 
         return $attributes;
     }
+
+    /**
+     * Do any additional initialization you may need at the time a new block instance is created
+     *
+     * @return boolean
+     * @throws dml_exception
+     */
+    public function instance_create() {
+        global $DB;
+
+        // Add default content.
+
+        // Make visible on all pages.
+        $config = new stdClass();
+        $config->text = get_config('block_genericotemp' , 'text');
+        $config->format = FORMAT_HTML;
+        parent::instance_config_save($config);
+
+        // Update default to course-*.
+        $DB->update_record('block_instances', (object) [
+            'id' => $this->instance->id,
+            'pagetypepattern' => 'course-*'
+        ]);
+
+        return true;
+    }
+
 }

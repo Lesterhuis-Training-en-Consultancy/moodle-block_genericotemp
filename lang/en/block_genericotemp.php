@@ -23,6 +23,10 @@
  * @copyright 29/12/2019 Mfreak.nl | LdesignMedia.nl - Luuk Verhoeven
  * @author    Luuk Verhoeven
  */
+$string['pluginname'] = 'Generico template';
+$string['genericotemp:addinstance'] = 'Add a new Generico template block';
+$string['genericotemp:myaddinstance'] = 'Add a new Generico template block to Dashboard';
+$string['genericotemp:view'] = 'View generico template block';
 
 $string['allowadditionalcssclasses'] = 'Allow additional CSS classes';
 $string['configallowadditionalcssclasses'] = 'Adds a configuration option to HTML block instances allowing additional 
@@ -32,9 +36,9 @@ $string['configclasses_help'] = 'The purpose of this configuration is to aid wit
 from each other. Any CSS classes entered here (space delimited) will be appended to the block\'s default classes.';
 $string['configcontent'] = 'Content';
 $string['configtitle'] = 'HTML block title';
-$string['genericotemp:addinstance'] = 'Add a new Generico template block';
-$string['genericotemp:myaddinstance'] = 'Add a new Generico template block to Dashboard';
 $string['newgenericotempblock'] = '(new generico template block)';
-$string['pluginname'] = 'Generico template';
 $string['search:content'] = 'Generico template block content';
 $string['privacy:metadata:block'] = 'The Generico template block stores all of its data within the block subsystem.';
+
+// Settings.
+$string['setting:text'] = 'Default content for a new generico template block';
