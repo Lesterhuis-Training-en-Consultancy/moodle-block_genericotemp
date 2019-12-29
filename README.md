@@ -1,6 +1,6 @@
-## a Moodle activity for making canvas sketches
+## Block generico template
 
-In brief, the MFreak mod `gcanvas` gives the user the ability to make a sketch in html5 canvas.
+In brief, the MFreak `block_genericotemp` allows to add an HTML block to a course with a default template. 
  
 ![MFreak.nl](https://MFreak.nl/logo_small.png) 
 <img src="https://ltnc.nl/wp-content/uploads/2016/10/cropped-beeldmerk.png" alt="LT&C" width="60"/>
@@ -16,7 +16,7 @@ In brief, the MFreak mod `gcanvas` gives the user the ability to make a sketch i
 ![Moodle37](https://img.shields.io/badge/moodle-3.7-brightgreen.svg)
 ![Moodle38](https://img.shields.io/badge/moodle-3.8-brightgreen.svg)
 ![PHP7.2](https://img.shields.io/badge/PHP-7.2-brightgreen.svg)
-[![Build Status](https://travis-ci.org/MFreakNL/moodle-mod_gcanvas.svg?branch=master)](https://travis-ci.org/MFreakNL/moodle-mod_gcanvas)
+
 
 ## List of features
 - GDPR provider
