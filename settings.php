@@ -15,18 +15,20 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Settings for the HTML block
+ * Settings for the Genericotemp block
  *
- * @copyright 2012 Aaron Barnes
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @package   block_html
+ *
+ * @package   block_genericotemp
+ * @copyright 29/12/2019 Mfreak.nl | LdesignMedia.nl - Luuk Verhoeven
+ * @author    Luuk Verhoeven
  */
 
 defined('MOODLE_INTERNAL') || die;
 
 if ($ADMIN->fulltree) {
-    $settings->add(new admin_setting_configcheckbox('block_html_allowcssclasses', get_string('allowadditionalcssclasses', 'block_html'),
-                       get_string('configallowadditionalcssclasses', 'block_html'), 0));
+    $settings->add(new admin_setting_configcheckbox('block_genericotemp_allowcssclasses', get_string('allowadditionalcssclasses', 'block_genericotemp'),
+        get_string('configallowadditionalcssclasses', 'block_genericotemp'), 0));
 }
 
 

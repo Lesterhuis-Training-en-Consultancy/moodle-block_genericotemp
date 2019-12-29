@@ -15,14 +15,14 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Privacy Subsystem implementation for block_html.
+ * Privacy Subsystem implementation for block_genericotemp.
  *
- * @package    block_html
+ * @package    block_genericotemp
  * @copyright  2018 Andrew Nicols <andrew@nicols.co.uk>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace block_html\privacy;
+namespace block_genericotemp\privacy;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -35,25 +35,29 @@ use \core_privacy\local\request\deletion_criteria;
 use \core_privacy\local\metadata\collection;
 
 /**
- * Privacy Subsystem implementation for block_html.
+ * Privacy Subsystem implementation for block_genericotemp.
  *
- * @copyright  2018 Andrew Nicols <andrew@nicols.co.uk>
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ *
+ * @package   block_genericotemp
+ * @copyright 29/12/2019 Mfreak.nl | LdesignMedia.nl - Luuk Verhoeven
+ * @author    Luuk Verhoeven
  */
 class provider implements
-        // The block_html block stores user provided data.
-        \core_privacy\local\metadata\provider,
+    // The block_genericotemp block stores user provided data.
+    \core_privacy\local\metadata\provider,
 
-        // This plugin is capable of determining which users have data within it.
-        \core_privacy\local\request\core_userlist_provider,
+    // This plugin is capable of determining which users have data within it.
+    \core_privacy\local\request\core_userlist_provider,
 
-        // The block_html block provides data directly to core.
-        \core_privacy\local\request\plugin\provider {
+    // The block_genericotemp block provides data directly to core.
+    \core_privacy\local\request\plugin\provider {
 
     /**
-     * Returns information about how block_html stores its data.
+     * Returns information about how block_genericotemp stores its data.
      *
-     * @param   collection     $collection The initialised collection to add items to.
+     * @param collection $collection The initialised collection to add items to.
+     *
      * @return  collection     A listing of user data stored through this system.
      */
     public static function get_metadata(collection $collection) : collection {
@@ -65,7 +69,8 @@ class provider implements
     /**
      * Get the list of contexts that contain user information for the specified user.
      *
-     * @param   int         $userid     The user to search.
+     * @param int $userid The user to search.
+     *
      * @return  contextlist   $contextlist  The contextlist containing the list of contexts used in this plugin.
      */
     public static function get_contexts_for_userid(int $userid) : \core_privacy\local\request\contextlist {
@@ -77,7 +82,7 @@ class provider implements
                   FROM {block_instances} b
             INNER JOIN {context} c ON c.instanceid = b.id AND c.contextlevel = :contextblock
             INNER JOIN {context} bpc ON bpc.id = b.parentcontextid
-                 WHERE b.blockname = 'html'
+                 WHERE b.blockname = 'genericotemp'
                    AND bpc.contextlevel = :contextuser
                    AND bpc.instanceid = :userid";
 
@@ -95,7 +100,8 @@ class provider implements
     /**
      * Get the list of users who have data within a context.
      *
-     * @param   userlist    $userlist   The userlist containing the list of users who have data in this context/plugin combination.
+     * @param userlist $userlist The userlist containing the list of users who have data in this context/plugin
+     *                           combination.
      */
     public static function get_users_in_context(userlist $userlist) {
         // This block doesn't know who information is stored against unless it
@@ -109,13 +115,13 @@ class provider implements
         $sql = "SELECT bpc.instanceid AS userid
                   FROM {block_instances} bi
                   JOIN {context} bpc ON bpc.id = bi.parentcontextid
-                 WHERE bi.blockname = 'html'
+                 WHERE bi.blockname = 'genericotemp'
                    AND bpc.contextlevel = :contextuser
                    AND bi.id = :blockinstanceid";
 
         $params = [
             'contextuser' => CONTEXT_USER,
-            'blockinstanceid' => $context->instanceid
+            'blockinstanceid' => $context->instanceid,
         ];
 
         $userlist->add_from_sql('userid', $sql, $params);
@@ -124,21 +130,24 @@ class provider implements
     /**
      * Export all user data for the specified user, in the specified contexts.
      *
-     * @param   approved_contextlist    $contextlist    The approved contexts to export information for.
+     * @param approved_contextlist $contextlist The approved contexts to export information for.
+     *
+     * @throws \coding_exception
+     * @throws \dml_exception
      */
     public static function export_user_data(approved_contextlist $contextlist) {
         global $DB;
 
         $user = $contextlist->get_user();
 
-        list($contextsql, $contextparams) = $DB->get_in_or_equal($contextlist->get_contextids(), SQL_PARAMS_NAMED);
+        [$contextsql, $contextparams] = $DB->get_in_or_equal($contextlist->get_contextids(), SQL_PARAMS_NAMED);
 
         $sql = "SELECT
                     c.id AS contextid,
                     bi.*
                   FROM {context} c
             INNER JOIN {block_instances} bi ON bi.id = c.instanceid AND c.contextlevel = :contextlevel
-                 WHERE bi.blockname = 'html'
+                 WHERE bi.blockname = 'genericotemp'
                    AND(
                     c.id {$contextsql}
                 )
@@ -152,20 +161,20 @@ class provider implements
         $instances = $DB->get_recordset_sql($sql, $params);
         foreach ($instances as $instance) {
             $context = \context_block::instance($instance->id);
-            $block = block_instance('html', $instance);
+            $block = block_instance('genericotemp', $instance);
             if (empty($block->config)) {
                 // Skip this block. It has not been configured.
                 continue;
             }
 
             $html = writer::with_context($context)
-                ->rewrite_pluginfile_urls([], 'block_html', 'content', null, $block->config->text);
+                          ->rewrite_pluginfile_urls([], 'block_genericotemp', 'content', null, $block->config->text);
 
             // Default to FORMAT_HTML which is what will have been used before the
             // editor was properly implemented for the block.
             $format = isset($block->config->format) ? $block->config->format : FORMAT_HTML;
 
-            $filteropt = (object) [
+            $filteropt = (object)[
                 'overflowdiv' => true,
                 'noclean' => true,
             ];
@@ -184,7 +193,9 @@ class provider implements
     /**
      * Delete all data for all users in the specified context.
      *
-     * @param   context                 $context   The specific context to delete data for.
+     * @param context $context The specific context to delete data for.
+     *
+     * @throws \dml_exception
      */
     public static function delete_data_for_all_users_in_context(\context $context) {
 
@@ -201,7 +212,9 @@ class provider implements
     /**
      * Delete multiple users within a single context.
      *
-     * @param   approved_userlist       $userlist The approved context and user information to delete information for.
+     * @param approved_userlist $userlist The approved context and user information to delete information for.
+     *
+     * @throws \dml_exception
      */
     public static function delete_data_for_users(approved_userlist $userlist) {
         $context = $userlist->get_context();
@@ -214,7 +227,9 @@ class provider implements
     /**
      * Delete all user data for the specified user, in the specified contexts.
      *
-     * @param   approved_contextlist    $contextlist    The approved contexts and user information to delete information for.
+     * @param approved_contextlist $contextlist The approved contexts and user information to delete information for.
+     *
+     * @throws \dml_exception
      */
     public static function delete_data_for_user(approved_contextlist $contextlist) {
         // The only way to delete data for the html block is to delete the block instance itself.
@@ -232,12 +247,14 @@ class provider implements
     /**
      * Get the block instance record for the specified context.
      *
-     * @param   \context_block $context The context to fetch
+     * @param \context_block $context The context to fetch
+     *
      * @return  \stdClass
+     * @throws \dml_exception
      */
     protected static function get_instance_from_context(\context_block $context) {
         global $DB;
 
-        return $DB->get_record('block_instances', ['id' => $context->instanceid, 'blockname' => 'html']);
+        return $DB->get_record('block_instances', ['id' => $context->instanceid, 'blockname' => 'genericotemp']);
     }
 }

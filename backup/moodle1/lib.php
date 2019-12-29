@@ -17,9 +17,11 @@
 /**
  * Provides support for the conversion of moodle1 backup to the moodle2 format
  *
- * @package    block_html
- * @copyright  2012 Paul Nicholls
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ *
+ * @package   block_genericotemp
+ * @copyright 29/12/2019 Mfreak.nl | LdesignMedia.nl - Luuk Verhoeven
+ * @author    Luuk Verhoeven
  */
 
 defined('MOODLE_INTERNAL') || die();
@@ -27,23 +29,24 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Block conversion handler for html
  */
-class moodle1_block_html_handler extends moodle1_block_handler {
+class moodle1_block_genericotemp_handler extends moodle1_block_handler {
     private $fileman = null;
+
     protected function convert_configdata(array $olddata) {
         global $CFG;
         require_once($CFG->libdir . '/db/upgradelib.php');
         $instanceid = $olddata['id'];
-        $contextid  = $this->converter->get_contextid(CONTEXT_BLOCK, $olddata['id']);
+        $contextid = $this->converter->get_contextid(CONTEXT_BLOCK, $olddata['id']);
         $decodeddata = base64_decode($olddata['configdata']);
-        list($updated, $configdata) = upgrade_fix_serialized_objects($decodeddata);
+        [$updated, $configdata] = upgrade_fix_serialized_objects($decodeddata);
         $configdata = unserialize($configdata);
 
         // get a fresh new file manager for this instance
-        $this->fileman = $this->converter->get_file_manager($contextid, 'block_html');
+        $this->fileman = $this->converter->get_file_manager($contextid, 'block_genericotemp');
 
         // convert course files embedded in the block content
         $this->fileman->filearea = 'content';
-        $this->fileman->itemid   = 0;
+        $this->fileman->itemid = 0;
         $configdata->text = moodle1_converter::migrate_referenced_files($configdata->text, $this->fileman);
         $configdata->format = FORMAT_HTML;
 
@@ -55,7 +58,7 @@ class moodle1_block_html_handler extends moodle1_block_handler {
         $this->xmlwriter->begin_tag('inforef');
         $this->xmlwriter->begin_tag('fileref');
         foreach ($this->fileman->get_fileids() as $fileid) {
-            $this->write_xml('file', array('id' => $fileid));
+            $this->write_xml('file', ['id' => $fileid]);
         }
         $this->xmlwriter->end_tag('fileref');
         $this->xmlwriter->end_tag('inforef');

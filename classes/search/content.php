@@ -15,32 +15,36 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Search area for block_html blocks
+ * Search area for block_genericotemp blocks
  *
- * @package block_html
- * @copyright 2017 The Open University
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ *
+ * @package   block_genericotemp
+ * @copyright 29/12/2019 Mfreak.nl | LdesignMedia.nl - Luuk Verhoeven
+ * @author    Luuk Verhoeven
  */
 
-namespace block_html\search;
+namespace block_genericotemp\search;
 
 use core_search\moodle_recordset;
 
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Search area for block_html blocks
+ * Search area for block_genericotemp blocks
  *
- * @package block_html
- * @copyright 2017 The Open University
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ *
+ * @package   block_genericotemp
+ * @copyright 29/12/2019 Mfreak.nl | LdesignMedia.nl - Luuk Verhoeven
+ * @author    Luuk Verhoeven
  */
 class content extends \core_search\base_block {
 
-    public function get_document($record, $options = array()) {
+    public function get_document($record, $options = []) {
         // Create empty document.
         $doc = \core_search\document_factory::instance($record->id,
-                $this->componentname, $this->areaname);
+            $this->componentname, $this->areaname);
 
         // Get stdclass object with data from DB.
         $data = unserialize(base64_decode($record->configdata));
@@ -66,7 +70,7 @@ class content extends \core_search\base_block {
 
         // Mark document new if appropriate.
         if (isset($options['lastindexedtime']) &&
-                ($options['lastindexedtime'] < $record->timecreated)) {
+            ($options['lastindexedtime'] < $record->timecreated)) {
             // If the document was created after the last index time, it must be new.
             $doc->set_is_new(true);
         }
@@ -74,16 +78,24 @@ class content extends \core_search\base_block {
         return $doc;
     }
 
+    /**
+     * @return bool
+     */
     public function uses_file_indexing() {
         return true;
     }
 
+    /**
+     * @param \core_search\document $document
+     *
+     * @throws \coding_exception
+     */
     public function attach_files($document) {
         $fs = get_file_storage();
 
         $context = \context::instance_by_id($document->get('contextid'));
 
-        $files = $fs->get_area_files($context->id, 'block_html', 'content');
+        $files = $fs->get_area_files($context->id, 'block_genericotemp', 'content');
         foreach ($files as $file) {
             $document->add_stored_file($file);
         }
