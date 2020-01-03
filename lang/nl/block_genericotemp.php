@@ -24,21 +24,19 @@
  * @author    Luuk Verhoeven
  */
 $string['pluginname'] = 'Generico template';
-$string['genericotemp:addinstance'] = 'Add a new Generico template block';
-$string['genericotemp:myaddinstance'] = 'Add a new Generico template block to Dashboard';
-$string['genericotemp:view'] = 'View generico template block';
+$string['genericotemp:addinstance'] = 'Voeg een nieuwe Generico template blok toe';
+$string['genericotemp:myaddinstance'] = 'Voeg een nieuw Generico template block toe aan mijn startpagina';
+$string['genericotemp:view'] = 'Bekijk generico template blok';
 
-$string['allowadditionalcssclasses'] = 'Allow additional CSS classes';
-$string['configallowadditionalcssclasses'] = 'Adds a configuration option to HTML block instances allowing additional 
-CSS classes to be set.';
-$string['configclasses'] = 'Additional CSS classes';
-$string['configclasses_help'] = 'The purpose of this configuration is to aid with theming by helping distinguish HTML blocks 
-from each other. Any CSS classes entered here (space delimited) will be appended to the block\'s default classes.';
-$string['configcontent'] = 'Content';
-$string['configtitle'] = 'HTML block title';
-$string['newgenericotempblock'] = '(new generico template block)';
-$string['search:content'] = 'Generico template block content';
-$string['privacy:metadata:block'] = 'The Generico template block stores all of its data within the block subsystem.';
+$string['allowadditionalcssclasses'] = 'Sta extra CSS classes toe';
+$string['configallowadditionalcssclasses'] = 'Voegt een configuratie-optie toe aan HTML-blokken waarmee je extra CSS classes kunt toevoegen.';
+$string['configclasses'] = 'Extra CSS classes';
+$string['configclasses_help'] = 'HHet doel van deze configuratie is om te helpen bij aanpassen van een thema om HTML-blokken van elkaar te onderscheiden. Als je hier een CSS-klasse invoert (spatie gescheiden) dan zal die toegevoegd worden aan de standaard classes van het blok.';
+$string['configcontent'] = 'Inhoud';
+$string['configtitle'] = 'HTML bloktitel';
+$string['newgenericotempblock'] = '(nieuw generico template blok)';
+$string['search:content'] = 'Generico template blok inhoud';
+$string['privacy:metadata:block'] = 'De Generico template blok bewaart al zijn data binnen het blok subsysteem.';
 
 // Settings.
-$string['setting:text'] = 'Default content for a new generico template block';
+$string['setting:text'] = 'Standaard content voor een nieuwe Generico template blok';
