@@ -15,6 +15,7 @@ In brief, the MFreak `block_genericotemp` allows to add an HTML block to a cours
 ![Moodle36](https://img.shields.io/badge/moodle-3.6-brightgreen.svg)
 ![Moodle37](https://img.shields.io/badge/moodle-3.7-brightgreen.svg)
 ![Moodle38](https://img.shields.io/badge/moodle-3.8-brightgreen.svg)
+![Moodle39](https://img.shields.io/badge/moodle-3.9-brightgreen.svg)
 ![PHP7.2](https://img.shields.io/badge/PHP-7.2-brightgreen.svg)
 
 
