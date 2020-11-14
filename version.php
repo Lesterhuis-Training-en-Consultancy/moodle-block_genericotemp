@@ -24,7 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->release = '3.9.1';
+$plugin->release = '3.10.0';
 $plugin->version = 2020071700;        // The current plugin version (Date: YYYYMMDDXX)
 $plugin->requires = 2018051100;        // Requires this Moodle version
 $plugin->component = 'block_genericotemp';      // Full name of the plugin (used for diagnostics)

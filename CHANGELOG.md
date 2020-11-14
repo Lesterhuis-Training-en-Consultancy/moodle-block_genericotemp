@@ -28,17 +28,26 @@ Types of changes
 * **Fixed** for any bug fixes.
 * **Security** in case of vulnerabilities.
 
-## Version (3.9.0) - 2020-05-09
-### Updated
+# Version (3.10) - 2020-11-14
+
+#### Added
+- Improved code style
+- Tested in Moodle 3.10 no issues found.
+
+#### Removed
+- Remove `.eslintrc` `Gruntfile.js` and `packages.json` from the project causes Travis issues.
+
+# Version (3.9.0) - 2020-05-09
+#### Updated
 - Version number no issues found in Moodle 3.9
 
-## Version (3.7.3) - 2019-12-30
-### Added
+# Version (3.7.3) - 2019-12-30
+#### Added
 - Global setting template
 - Add capability `block/genericotemp:view`
 - Default use pagetypepattern `course-*`
 - Add pix icon
 - Fix backup
 
-### Changed
+#### Changed
 - Cloned the original html block from Moodle 3.7
