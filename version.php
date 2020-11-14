@@ -24,8 +24,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->release = '3.7.3';
-$plugin->version = 2019122904;        // The current plugin version (Date: YYYYMMDDXX)
+$plugin->release = '3.10.0';
+$plugin->version = 2020071700;        // The current plugin version (Date: YYYYMMDDXX)
 $plugin->requires = 2018051100;        // Requires this Moodle version
 $plugin->component = 'block_genericotemp';      // Full name of the plugin (used for diagnostics)
 $plugin->maturity = MATURITY_STABLE;

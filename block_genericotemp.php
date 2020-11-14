@@ -84,7 +84,7 @@ class block_genericotemp extends block_base {
             return $this->content;
         }
 
-        if(!has_capability('block/genericotemp:view', $this->context)){
+        if (!has_capability('block/genericotemp:view', $this->context)) {
             return (object)[
             ];
         }
@@ -263,21 +263,24 @@ class block_genericotemp extends block_base {
      * @throws dml_exception
      */
     public function instance_create() {
-        global $DB;
+        global $DB, $COURSE;
 
         // Add default content.
 
         // Make visible on all pages.
         $config = new stdClass();
-        $config->text = get_config('block_genericotemp' , 'text');
+        $config->text = get_config('block_genericotemp', 'text');
         $config->format = FORMAT_HTML;
         parent::instance_config_save($config);
 
-        // Update default to course-*.
-        $DB->update_record('block_instances', (object) [
-            'id' => $this->instance->id,
-            'pagetypepattern' => 'course-*'
-        ]);
+        if (!empty($COURSE->id) && $COURSE->id > 1) {
+
+            // Update default to course-*.
+            $DB->update_record('block_instances', (object)[
+                'id' => $this->instance->id,
+                'pagetypepattern' => 'course-*',
+            ]);
+        }
 
         return true;
     }

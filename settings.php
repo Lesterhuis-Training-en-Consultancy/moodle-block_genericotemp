@@ -33,7 +33,7 @@ if ($ADMIN->fulltree) {
         0));
 
     $settings->add(new admin_setting_confightmleditor('block_genericotemp/text',
-        get_string('setting:text' , 'block_genericotemp'),
+        get_string('setting:text', 'block_genericotemp'),
         '',
         ''));
 }
